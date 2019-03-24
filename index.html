@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>task-list-project</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+  <body>
+    <form class="task-form">
+      <fieldset class="enter-task">
+        <legend>Enter an item to be done</legend>
+        <div><label for="task">Task:</label></div>
+        <div>
+          <input
+            class="task-input"
+            type="text"
+            name="task"
+            class="task"
+            placeholder="write task here..."
+            required="required"
+          />
+        </div>
+        <div><label for="task">Priority:</label></div>
+        <div class="task-priority">
+          <select class="priority-input" name="priority" required="required">
+            <option value="high">high</option>
+            <option value="medium">medium</option>
+            <option value="low">low</option>
+          </select>
+        </div>
+        <div>
+          <input
+            type="button"
+            name="add-item"
+            onclick="addItem()"
+            value="Add it!"
+          />
+        </div>
+        <div class="task-field"></div>
+      </fieldset>
+      <br />
+      <fieldset class="display-tasks">
+        <legend>Display All Tasks</legend>
+        <input
+          type="button"
+          name="display"
+          onclick="displayItems()"
+          value="Display All Tasks"
+        />
+        <ul class="task-field"></ul>
+      </fieldset>
+    </form>
+    <script src="./scripts/main.js" charset="utf-8"></script>
+  </body>
+</html>
