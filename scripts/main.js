@@ -1,11 +1,51 @@
-let taskList = [];
 let taskInput = document.getElementsByClassName("task-input")[0];
 let priorityInput = document.getElementsByClassName("priority-input")[0];
 let taskfield = document.getElementsByClassName("task-field");
 
+class Node {
+  constructor(task, priority, owner) {
+    this.task = task;
+    this.priority = priority;
+    this.owner = owner;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.size = 0;
+  }
+}
+
+function add(task, priority, owner) {
+  var node = new Node(task, priority, owner);
+  var current;
+  if (this.head == null) this.head = node;
+  else {
+    current = this.head;
+    while (current.next) {
+      current = current.next;
+    }
+    current.next = node;
+  }
+  this.size++;
+}
+
+function printList() {
+  var curr = this.head;
+  var str = "";
+  while (curr) {
+    str += curr.element + " ";
+    curr = curr.next;
+  }
+  console.log(str);
+}
+
 function random() {
   return Math.round(Math.random()); // returns either 0 or 1
 }
+
 function togglePriority(value) {
   if (typeof value == "number") {
     switch (value) {
@@ -31,6 +71,7 @@ function togglePriority(value) {
     }
   }
 }
+
 function addItem() {
   let owner = random() == 0 ? "bob" : "joe";
   let task = taskInput.value;
