@@ -1,10 +1,14 @@
+//top section DOM elements
+const input = document.getElementsByClassName("task-input")[0];
+const priority = document.getElementsByClassName("priority-input")[0];
+const taskField = document.getElementsByClassName("task-field");
+
 class Node {
   constructor(element) {
     this.element = element;
     this.next = null;
   }
 }
-
 class LinkedList {
   constructor() {
     this.head = null;
@@ -26,19 +30,35 @@ class LinkedList {
   }
   printList() {
     var curr = this.head;
-    var str = "";
+    var out = "<ul>";
     while (curr) {
-      str += curr.element + "\n";
+      out += `<li>Task: ${curr.element.task}, Priority: ${
+        curr.element.priority
+      }, Owner: ${curr.element.owner} </li>`;
       curr = curr.next;
     }
-    console.log(str);
+    out += "</ul>";
+    taskField[1].innerHTML = out;
   }
+}
+var ll = new LinkedList();
+
+function bobJoe() {
+  return Math.round(Math.random()) == 0 ? "bob" : "joe";
 }
 
 function addItem() {
-  var ll = new LinkedList();
-  for (var i = 0; i < 10; i++) {
-    ll.add(i);
-  }
+  ll.add({
+    task: `${input.value}`,
+    priority: `${priority.value}`,
+    owner: `${bobJoe()}`
+  });
+  taskField[0].innerHTML = `Task: ${input.value}, Priority: ${
+    priority.value
+  }, Owner: ${bobJoe()}`;
+}
+
+function displayItems() {
   ll.printList();
+  console.log(ll);
 }
