@@ -1,64 +1,84 @@
-//top section DOM elements
-const input = document.getElementsByClassName("task-input")[0];
-const priority = document.getElementsByClassName("priority-input")[0];
-const taskField = document.getElementsByClassName("task-field");
+var temp = (function() {
+  let taskList = []; // initialize empty taskList array
+  let taskDesc = document.getElementsByClassName("task-input")[0];
+  let priority = document.getElementsByClassName("priority-input")[0];
+  let output = document.getElementsByClassName("task-field")[0];
+  let allOutput = document.getElementsByClassName("task-field")[1];
+  let task;
 
-class Node {
-  constructor(element) {
-    this.element = element;
-    this.next = null;
+  function add() {
+    let out;
+    let owner = rand() == 1 ? "Joe" : "Bob";
+    task = {
+      description: taskDesc.value,
+      priority: togglePriority(priority.value),
+      owner: owner
+    };
+    out = `Description: ${taskDesc.value}, Priority: ${
+      priority.value
+    }, Owner:${owner}`;
+    output.innerHTML = out;
+    taskList.push(task);
   }
-}
-class LinkedList {
-  constructor() {
-    this.head = null;
-    this.size = 0;
+
+  function sort(obj) {
+    obj.sort(function(a, b) {
+      return b.priority - a.priority;
+    });
   }
-  add(element) {
-    var node = new Node(element);
-    var current;
-    if (this.head == null) {
-      this.head = node;
-    } else {
-      current = this.head;
-      while (current.next) {
-        current = current.next;
-      }
-      current.next = node;
-    }
-    this.size++;
-  }
-  printList() {
-    var curr = this.head;
-    var out = "<ul>";
-    while (curr) {
-      out += `<li>Task: ${curr.element.task}, Priority: ${
-        curr.element.priority
-      }, Owner: ${curr.element.owner} </li>`;
-      curr = curr.next;
+
+  function display() {
+    sort(taskList);
+    let out = "<ul>";
+    for (var i = 0; i < taskList.length; i++) {
+      out += `<li>Description: ${
+        taskList[i].description
+      }, Priority: ${togglePriority(taskList[i].priority)}, Owner: ${
+        taskList[i].owner
+      }</li>`;
     }
     out += "</ul>";
-    taskField[1].innerHTML = out;
+    allOutput.innerHTML = out;
   }
-}
-var ll = new LinkedList();
+  return {
+    display: display,
+    add: add
+  };
+})();
 
-function bobJoe() {
-  return Math.round(Math.random()) == 0 ? "bob" : "joe";
+function rand() {
+  return Math.round(Math.random());
 }
 
-function addItem() {
-  ll.add({
-    task: `${input.value}`,
-    priority: `${priority.value}`,
-    owner: `${bobJoe()}`
-  });
-  taskField[0].innerHTML = `Task: ${input.value}, Priority: ${
-    priority.value
-  }, Owner: ${bobJoe()}`;
+function togglePriority(value) {
+  if (typeof value == "number") {
+    switch (value) {
+      case 3:
+        return "high";
+      case 2:
+        return "medium";
+      case 1:
+        return "low";
+      default:
+        return "error";
+    }
+  } else {
+    switch (value) {
+      case "high":
+        return 3;
+      case "medium":
+        return 2;
+      case "low":
+        return 1;
+      default:
+        return 0;
+    }
+  }
 }
 
 function displayItems() {
-  ll.printList();
-  console.log(ll);
+  temp.display();
+}
+function addItem() {
+  temp.add();
 }
